@@ -8,6 +8,7 @@ hieght = 800
 
 gameDisplay = pygame.display.set_mode((width, hieght))
 pygame.display.set_caption('Simulator')
+clock = pygame.time.Clock()
 
 RED = (255,0,0)
 GREY = (138,138,138)
@@ -28,13 +29,14 @@ def simulator():
     ast_size = 50
     rob_size = 10
     bul_size = 5
+    fps = 60
 
     gameExit = False
     gameOver = False
     x_change = width/2
     y_change = hieght/2
-    x_start = random.randrange(-90, 0)
-    y_start = random.randrange(0, 800)
+    x_start = -90
+    y_start = random.randrange(50, 700)
 
 
     while not gameExit:
@@ -48,11 +50,13 @@ def simulator():
                     gameOver = False
                     gameExit = True
 
-        if x_start <= 0:
-                     x_start +=10
+        
+        x_start +=10
+        y_start += random.randint(1,11)
         gameDisplay.fill(BLACK)
         asteroid(x_start, y_start, ast_size)
         pygame.display.update()
+        clock.tick(fps)
     pygame.quit()
 simulator()
     
