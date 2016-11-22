@@ -13,8 +13,8 @@ RED = (255,0,0)
 GREY = (138,138,138)
 BLACK = (0,0,0)
 
-def asteroid():
-    True
+def asteroid(x_start, y_start, ast_size):
+    pygame.draw.rect(gameDisplay, GREY, [x_start, y_start, ast_size, ast_size])
 def ship():
     False
     
@@ -33,6 +33,10 @@ def simulator():
     gameOver = False
     x_change = width/2
     y_change = hieght/2
+    x_start = random.randrange(-90, 0)
+    y_start = random.randrange(0, 800)
+
+
     while not gameExit:
         
         for event in pygame.event.get():
@@ -43,6 +47,12 @@ def simulator():
                 if event.type == pygame.K_ESCAPE:
                     gameOver = False
                     gameExit = True
+
+        if x_start <= 0:
+                     x_start +=10
+        gameDisplay.fill(BLACK)
+        asteroid(x_start, y_start, ast_size)
+        pygame.display.update()
     pygame.quit()
 simulator()
     
