@@ -136,8 +136,6 @@ def gameLoop():
             asteroid3.draw()
         for asteroid1 in objectsleft:
             asteroid1.move()            #for objects made earlier move them.
-##            while asteroid1.collide:
-##                pygame.draw.rect(screen, WHITE, [ship_x,ship_y,block_size,block_size])
         for asteroid2 in objectsright:
             asteroid2.move()
         for asteroid3 in objectsup:
