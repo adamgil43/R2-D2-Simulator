@@ -12,6 +12,7 @@ class asteroidleft:
         self.asteroidw_change = 0
         self.asteroidw = self.rand_x + self.asteroid_thickness
         self.asteroidh = self.rand_y + self.asteroid_thickness
+        self.collide = False
     
     def move(self):
         if self.rand_x < 0:
@@ -23,7 +24,8 @@ class asteroidleft:
         self.rand_x += self.rand_x_change
         self.asteroidw += self.asteroidw_change
         if rect_overlap((ship_x, ship_y, block_size, block_size), (self.rand_x, self.rand_y, self.asteroid_thickness, self.asteroid_thickness)):
-            print("Dead")
+            pygame.draw.rect(screen, WHITE, [ship_x,ship_y,block_size,block_size])
+        
     def draw(self):
         pygame.draw.rect(screen, GREY, [self.rand_x,self.rand_y,self.asteroid_thickness,self.asteroid_thickness])
 
@@ -44,7 +46,7 @@ class asteroidright:
             self.rand_x_change += -10
         self.rand_x += self.rand_x_change
         if rect_overlap((ship_x, ship_y, block_size, block_size), (self.rand_x, self.rand_y, self.asteroid_thickness, self.asteroid_thickness)):
-            print("Dead")
+           pygame.draw.rect(screen, WHITE, [ship_x,ship_y,block_size,block_size])
     def draw(self):
         pygame.draw.rect(screen, GREY, [self.rand_x,self.rand_y,self.asteroid_thickness,self.asteroid_thickness])
 
@@ -64,7 +66,7 @@ class asteroidup:
             self.rand_y_change += -10
         self.rand_y += self.rand_y_change
         if rect_overlap((ship_x, ship_y, block_size, block_size), (self.rand_x, self.rand_y, self.asteroid_thickness, self.asteroid_thickness)):
-            print("Dead")
+           pygame.draw.rect(screen, WHITE, [ship_x,ship_y,block_size,block_size])
     def draw(self):
         pygame.draw.rect(screen, GREY, [self.rand_x,self.rand_y,self.asteroid_thickness,self.asteroid_thickness])
 
@@ -80,6 +82,7 @@ fps = 30
 BLACK = 0,0,0
 GREY = 126,126,126
 RED = 255,0,0
+WHITE = 255,255,255
 
 ship_x = (width/2)-25
 ship_y = (height/2)-25
@@ -94,17 +97,17 @@ def rect_overlap(a, b):
 
     
 objectsleft = []
-for o in range(5):
+for o in range(10):
     asteroid1 = asteroidleft()
     objectsleft.append(asteroid1)
 
 objectsright = []
-for a in range(5):
+for a in range(10):
     asteroid2 = asteroidright()
     objectsright.append(asteroid2)
 
 objectsup = []
-for b in range(5):
+for b in range(10):
     asteroid3 = asteroidup()
     objectsup.append(asteroid3)
 
@@ -120,6 +123,7 @@ def gameLoop():
                     gameOver = True
 
         screen.fill(BLACK)
+        pygame.draw.rect(screen, RED, [ship_x,ship_y,block_size,block_size])
         for asteroid1 in objectsleft:
             asteroid1.draw()
         for asteroid2 in objectsright:
@@ -128,11 +132,12 @@ def gameLoop():
             asteroid3.draw()
         for asteroid1 in objectsleft:
             asteroid1.move()
+##            while asteroid1.collide:
+##                pygame.draw.rect(screen, WHITE, [ship_x,ship_y,block_size,block_size])
         for asteroid2 in objectsright:
             asteroid2.move()
         for asteroid3 in objectsup:
             asteroid3.move()
-        pygame.draw.rect(screen, RED, [ship_x,ship_y,block_size,block_size])
         pygame.display.flip()
         clock.tick(fps)
 
